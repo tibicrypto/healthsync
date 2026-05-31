@@ -6,7 +6,8 @@ package com.healthautoexport.domain.model
  *
  * Tám danh sách luôn hiện diện; khi không có bản ghi, danh sách tương ứng là rỗng (`[]`) chứ
  * không bị bỏ qua hay đặt `null` — nhờ đó JSON_Serializer luôn phát ra đủ tám khóa mảng và bảo
- * toàn round-trip (Requirements 10.1, 10.3). Dùng [empty] để khởi tạo một envelope rỗng hợp lệ.
+ * toàn round-trip (Requirements 10.1, 10.3). Mỗi danh mục mặc định là `emptyList()`, vì vậy
+ * `ExportDataset()` (hoặc [empty]) tạo ra một envelope rỗng hợp lệ với đủ tám khóa.
  *
  * @property metrics chuỗi chỉ số tiêu chuẩn và lược đồ riêng, mỗi phần tử là một [MetricSeries].
  * @property workouts danh sách buổi tập (Requirement 5.x).
@@ -18,30 +19,22 @@ package com.healthautoexport.domain.model
  * @property heartRateNotifications các sự kiện cảnh báo nhịp tim (Requirement 6.3).
  */
 data class ExportDataset(
-    val metrics: List<MetricSeries>,
-    val workouts: List<Workout>,
-    val stateOfMind: List<StateOfMind>,
-    val medications: List<Medication>,
-    val symptoms: List<Symptom>,
-    val cycleTracking: List<CycleTrackingEntry>,
-    val ecg: List<EcgRecord>,
-    val heartRateNotifications: List<HeartRateNotification>,
+    val metrics: List<MetricSeries> = emptyList(),
+    val workouts: List<Workout> = emptyList(),
+    val stateOfMind: List<StateOfMind> = emptyList(),
+    val medications: List<Medication> = emptyList(),
+    val symptoms: List<Symptom> = emptyList(),
+    val cycleTracking: List<CycleTrackingEntry> = emptyList(),
+    val ecg: List<EcgRecord> = emptyList(),
+    val heartRateNotifications: List<HeartRateNotification> = emptyList(),
 ) {
     companion object {
         /**
          * Envelope rỗng với cả tám danh mục là danh sách rỗng — biểu diễn "không có bản ghi"
-         * mà vẫn giữ đủ tám khóa khi tuần tự hóa (Requirements 10.1, 10.3).
+         * mà vẫn giữ đủ tám khóa khi tuần tự hóa (Requirements 10.1, 10.3). Tương đương
+         * `ExportDataset()` nhờ các tham số mặc định `emptyList()`.
          */
-        fun empty(): ExportDataset = ExportDataset(
-            metrics = emptyList(),
-            workouts = emptyList(),
-            stateOfMind = emptyList(),
-            medications = emptyList(),
-            symptoms = emptyList(),
-            cycleTracking = emptyList(),
-            ecg = emptyList(),
-            heartRateNotifications = emptyList(),
-        )
+        fun empty(): ExportDataset = ExportDataset()
     }
 }
 

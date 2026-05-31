@@ -15,6 +15,11 @@ dependencies {
 
     // Test stack: Kotest property + assertions + JUnit5 runner.
     testImplementation(libs.bundles.kotest)
+
+    // JUnit5 (Jupiter) — the platform Kotest runs on; also lets plain JUnit5
+    // example tests live alongside the property-based tests.
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.jupiter)
 }
 
 // Kotest 5 runs on the JUnit5 platform.
