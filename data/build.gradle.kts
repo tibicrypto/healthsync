@@ -67,6 +67,9 @@ dependencies {
     // --- Credential storage (Android Keystore backed) ---
     implementation(libs.androidx.security.crypto)
 
+    // --- Storage Access Framework (Local Storage destination) ---
+    implementation(libs.androidx.documentfile)
+
     // --- Networking (REST API + Home Assistant destinations) ---
     implementation(libs.bundles.networking)
 
