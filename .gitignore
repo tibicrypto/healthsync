@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android / IntelliJ
+*.iml
+.idea/
+local.properties
+captures/
+.cxx/
+
+# Keystore / secrets (never commit signing material or credentials)
+*.jks
+*.keystore
+
+# Local Android SDK (downloaded into the workspace for CI/build)
+android-sdk/
+repo.xml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
