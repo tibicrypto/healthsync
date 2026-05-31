@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Minimal AndroidManifest for the :data library module (task 1.2).
+
+  A library module manifest declares no <application> or launcher; the package
+  identity comes from the `namespace` in build.gradle.kts. Permissions specific
+  to data access (e.g. Health Connect reads, INTERNET) are declared in the :app
+  manifest during task 22.1 so the application owns the full permission set.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />

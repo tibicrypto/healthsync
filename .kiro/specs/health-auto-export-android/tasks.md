@@ -14,7 +14,7 @@ Ngôn ngữ triển khai là **Kotlin** (theo `design.md`). Module `:domain` và
     - Tạo version catalog `gradle/libs.versions.toml` khai báo phiên bản: Kotlin, AGP, Compose BOM/compiler, Hilt, Health Connect client, WorkManager, Room, DataStore, Jetpack Security, OkHttp/Retrofit, kotlinx.serialization, Kotest Property
     - Thiết lập phụ thuộc một chiều: `:serialization → :domain`, `:data → :domain` + `:data → :serialization`, `:app → :domain` + `:app → :data`
     - _Requirements: 22.2_
-  - [ ] 1.2 Cấu hình module Android (`:app`, `:data`) và module JVM thuần (`:domain`, `:serialization`)
+  - [x] 1.2 Cấu hình module Android (`:app`, `:data`) và module JVM thuần (`:domain`, `:serialization`)
     - Áp Android Gradle Plugin cho `:app` (application) và `:data` (library) với `minSdk 26`, `targetSdk 35`, `compileSdk 35`; cấu hình `:domain` và `:serialization` là `org.jetbrains.kotlin.jvm` thuần (không phụ thuộc Android SDK)
     - Bật Jetpack Compose cho `:app` (Compose BOM, `buildFeatures.compose = true`, compose compiler); áp Hilt plugin + `kapt`/`ksp` cho `:app` (và `:data` nếu cần cho Room/Hilt)
     - Tạo `AndroidManifest.xml` cơ sở cho `:app` (thẻ `<application>` trỏ tới Application class sẽ tạo ở task 22.1) và `:data` (manifest tối thiểu); thêm khai báo phụ thuộc Health Connect client, WorkManager, Room, DataStore, Jetpack Security, OkHttp/Retrofit vào `:data`, và kotlinx.serialization vào `:serialization`
@@ -25,7 +25,7 @@ Ngôn ngữ triển khai là **Kotlin** (theo `design.md`). Module `:domain` và
     - _Requirements: 22.2_
 
 - [ ] 2. Mô hình dữ liệu canonical, MetricCatalog và Ports (`:domain`)
-  - [ ] 2.1 Định nghĩa enum và định danh nền tảng
+  - [x] 2.1 Định nghĩa enum và định danh nền tảng
     - Tạo `DataSourceId`, `HealthMetricType` (phủ 12 nhóm metric của Requirement 4.1), `WorkoutType`, `AggregationPeriod`, `MetricKind` (CUMULATIVE/INSTANTANEOUS), `MetricSchema` (STANDARD/BLOOD_PRESSURE/SLEEP/ECG/HR_NOTIFICATION/...), `ExportFormat`, `DestinationType`, `SleepState`, `PermissionState`, `ExportStatus`, `CanonicalUnit`
     - _Requirements: 4.1, 3.1, 8.1, 10.1_
   - [ ] 2.2 Định nghĩa `MetricValue` và `UnifiedRecord`

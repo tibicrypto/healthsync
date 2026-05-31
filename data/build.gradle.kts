@@ -35,8 +35,11 @@ android {
         buildConfig = true
     }
 
-    // Robolectric needs Android resources available to unit tests.
     testOptions {
+        // For a library module the effective targetSdk is carried by its
+        // instrumentation tests; kept aligned with :app (35) for consistency.
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        // Robolectric needs Android resources available to unit tests.
         unitTests.isIncludeAndroidResources = true
     }
 }

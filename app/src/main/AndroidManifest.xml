@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Base AndroidManifest for the :app module (task 1.2).
+
+  This is the foundational manifest: it declares the Application entry point
+  and a single launcher Activity so the module is a valid, launchable Android
+  application. The classes referenced here (HealthExportApp, MainActivity) are
+  created in later tasks (21.2 / 22.1); referencing them now is intentional and
+  does not affect Gradle configuration.
+
+  The full set of Health Connect read permissions, the background-read
+  permission, INTERNET, foreground-service declarations, the permissions
+  rationale intent-filter, and the Automation deep-link intent-filter are added
+  in task 22.1 (Requirements 22.3, 22.4, 1.5, 1.10, 14.6).
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name=".HealthExportApp"
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
