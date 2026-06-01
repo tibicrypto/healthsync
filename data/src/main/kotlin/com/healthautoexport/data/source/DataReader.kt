@@ -64,7 +64,11 @@ class DataReader(
      */
     @Inject
     constructor(
-        sources: Map<DataSourceId, HealthDataSource>,
+        // @JvmSuppressWildcards giữ khóa Dagger là `Map<DataSourceId, HealthDataSource>` (bất biến),
+        // khớp với bản đồ được cung cấp ở tầng ráp nối Hilt (task 22.1) và với cách các ViewModel
+        // tiêm cùng bản đồ; nếu không, Kotlin sinh `Map<DataSourceId, ? extends HealthDataSource>`
+        // tạo một khóa khác và Dagger báo thiếu binding.
+        sources: Map<DataSourceId, @JvmSuppressWildcards HealthDataSource>,
         sourceToggles: SourceToggleStore,
     ) : this(sources, sourceToggles, DEFAULT_PER_SOURCE_TIMEOUT)
 

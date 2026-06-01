@@ -1,4 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Health Auto Export</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_quick_export">Xuất nhanh</string>
+    <string name="nav_metrics">Chỉ số</string>
+    <string name="nav_automations">Tự động</string>
+    <string name="nav_destinations">Đích đến</string>
+    <string name="nav_permissions">Quyền</string>
+    <string name="nav_sync_log">Nhật ký</string>
+    <string name="nav_settings">Cài đặt</string>
+
+    <!-- Metrics screen -->
+    <string name="metrics_title">Chọn chỉ số</string>
+    <string name="metrics_workouts">Loại bài tập</string>
+    <string name="metrics_empty_warning">Cần chọn ít nhất một chỉ số hoặc loại bài tập.</string>
+
+    <!-- Permissions screen -->
+    <string name="permissions_title">Trạng thái quyền</string>
+    <string name="permissions_refresh">Làm mới</string>
+    <string name="permissions_health_connect">Health Connect</string>
+    <string name="permissions_huawei">Huawei Health Kit</string>
+    <string name="permissions_granted">Đã cấp</string>
+    <string name="permissions_not_granted">Chưa cấp</string>
+    <string name="permissions_unavailable">Không khả dụng</string>
+    <string name="permissions_install">Cài đặt / cập nhật</string>
+    <string name="permissions_no_selection">Chưa chọn chỉ số nào để hiển thị trạng thái quyền.</string>
+
+    <!-- Quick export screen -->
+    <string name="quick_export_title">Xuất nhanh</string>
+    <string name="quick_export_format">Định dạng</string>
+    <string name="quick_export_period">Mức tổng hợp</string>
+    <string name="quick_export_run">Bắt đầu xuất</string>
+    <string name="quick_export_cancel">Hủy</string>
+    <string name="quick_export_running">Đang xuất…</string>
+    <string name="quick_export_date_adjusted">Thời điểm kết thúc đã được điều chỉnh về hiện tại.</string>
+
+    <!-- Automations screen -->
+    <string name="automations_title">Tự động hóa</string>
+    <string name="automations_create">Tạo Automation</string>
+    <string name="automations_edit">Chỉnh sửa</string>
+    <string name="automations_delete">Xóa</string>
+    <string name="automations_enable">Bật</string>
+    <string name="automations_disable">Tắt</string>
+    <string name="automations_save">Lưu</string>
+    <string name="automations_cancel">Hủy</string>
+    <string name="automations_name">Tên</string>
+    <string name="automations_empty">Chưa có Automation nào.</string>
+
+    <!-- Destinations screen -->
+    <string name="destinations_title">Đích đến</string>
+    <string name="destinations_save">Lưu</string>
+    <string name="destinations_select">Chọn làm đích</string>
+    <string name="destinations_non_https_warning">Cảnh báo: URL không dùng HTTPS; dữ liệu sẽ được truyền không mã hóa.</string>
+
+    <!-- Sync log screen -->
+    <string name="sync_log_title">Nhật ký đồng bộ</string>
+    <string name="sync_log_clear">Xóa nhật ký</string>
+    <string name="sync_log_empty">Nhật ký trống.</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_sources">Nguồn dữ liệu</string>
+    <string name="settings_priority">Ưu tiên nguồn</string>
+    <string name="settings_background_restriction">Hạn chế chạy nền</string>
+    <string name="settings_wipe">Xóa toàn bộ dữ liệu</string>
+    <string name="settings_wipe_confirm_title">Xác nhận xóa dữ liệu</string>
+    <string name="settings_wipe_confirm_message">Hành động này sẽ xóa các Automation, thông tin xác thực Destination và Sync_Log. Tiếp tục?</string>
+    <string name="settings_wipe_confirm_yes">Xóa</string>
+    <string name="settings_wipe_confirm_no">Hủy</string>
 </resources>

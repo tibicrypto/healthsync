@@ -1,19 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Base AndroidManifest for the :app module (task 1.2).
+  Full AndroidManifest for the :app module (task 22.1).
 
-  This is the foundational manifest: it declares the Application entry point
-  and a single launcher Activity so the module is a valid, launchable Android
-  application. The classes referenced here (HealthExportApp, MainActivity) are
-  created in later tasks (21.2 / 22.1); referencing them now is intentional and
-  does not affect Gradle configuration.
+  Declares the complete permission set, the Hilt Application entry point
+  (.HealthExportApp), and the single navigation Activity (.MainActivity) with
+  the Health Connect permissions-rationale intent-filters and the Automation
+  configuration deep-link intent-filter. WorkManager's default androidx.startup
+  initializer is removed so the app supplies its own Configuration via
+  HealthExportApp (on-demand init with HiltWorkerFactory).
 
-  The full set of Health Connect read permissions, the background-read
-  permission, INTERNET, foreground-service declarations, the permissions
-  rationale intent-filter, and the Automation deep-link intent-filter are added
-  in task 22.1 (Requirements 22.3, 22.4, 1.5, 1.10, 14.6).
+  Requirements: 22.3, 22.4, 1.5, 1.10, 14.6, 15.1.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ============================================================= -->
+    <!-- Network access (Req 22.3): outbound transmission happens only -->
+    <!-- through a configured Destination; NetworkEgressGuard blocks    -->
+    <!-- egress when no Destination is configured (Req 22.4).           -->
+    <!-- ============================================================= -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- ============================================================= -->
+    <!-- Foreground service for long-running scheduled Export_Job.      -->
+    <!-- WorkManager expedited/long work may run as a data-sync         -->
+    <!-- foreground service on Android 14+ (Req 15.1). Declared so      -->
+    <!-- WorkManager can promote work to the foreground when needed.    -->
+    <!-- ============================================================= -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <!-- ============================================================= -->
+    <!-- Health Connect read permissions (Req 1.5, 1.10).              -->
+    <!-- One android.permission.health.READ_* per metric / data type   -->
+    <!-- the app reads, plus background read for scheduled exports.     -->
+    <!-- ============================================================= -->
+    <!-- Activity -->
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_DISTANCE" />
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED" />
+    <uses-permission android:name="android.permission.health.READ_WHEELCHAIR_PUSHES" />
+    <uses-permission android:name="android.permission.health.READ_SPEED" />
+    <uses-permission android:name="android.permission.health.READ_STEPS_CADENCE" />
+    <uses-permission android:name="android.permission.health.READ_POWER" />
+    <uses-permission android:name="android.permission.health.READ_ELEVATION_GAINED" />
+
+    <!-- Body Measurement -->
+    <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+    <uses-permission android:name="android.permission.health.READ_HEIGHT" />
+    <uses-permission android:name="android.permission.health.READ_BODY_FAT" />
+    <uses-permission android:name="android.permission.health.READ_LEAN_BODY_MASS" />
+    <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE" />
+    <uses-permission android:name="android.permission.health.READ_BONE_MASS" />
+
+    <!-- Heart -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_RESTING_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE_VARIABILITY" />
+    <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
+    <uses-permission android:name="android.permission.health.READ_VO2_MAX" />
+
+    <!-- Respiratory -->
+    <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE" />
+    <uses-permission android:name="android.permission.health.READ_OXYGEN_SATURATION" />
+
+    <!-- Vitals -->
+    <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE" />
+    <uses-permission android:name="android.permission.health.READ_BASAL_BODY_TEMPERATURE" />
+    <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE" />
+
+    <!-- Nutrition -->
+    <uses-permission android:name="android.permission.health.READ_HYDRATION" />
+    <uses-permission android:name="android.permission.health.READ_NUTRITION" />
+
+    <!-- Sleep -->
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+
+    <!-- Mindfulness -->
+    <uses-permission android:name="android.permission.health.READ_MINDFULNESS" />
+
+    <!-- Reproductive Health -->
+    <uses-permission android:name="android.permission.health.READ_MENSTRUATION" />
+    <uses-permission android:name="android.permission.health.READ_OVULATION_TEST" />
+    <uses-permission android:name="android.permission.health.READ_SEXUAL_ACTIVITY" />
+    <uses-permission android:name="android.permission.health.READ_INTERMENSTRUAL_BLEEDING" />
+
+    <!-- Exercise / Workout sessions + route (Req 5.x) -->
+    <uses-permission android:name="android.permission.health.READ_EXERCISE" />
+    <uses-permission android:name="android.permission.health.READ_EXERCISE_ROUTE" />
+
+    <!-- Background read for scheduled (background) Export_Job (Req 1.5, 1.10) -->
+    <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND" />
 
     <application
         android:name=".HealthExportApp"
@@ -25,11 +104,67 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+            <!-- Launcher entry point. -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- ===================================================== -->
+            <!-- Health Connect permissions rationale (Req 1.x).       -->
+            <!-- Android 14+ surfaces rationale via VIEW_PERMISSION_USAGE; -->
+            <!-- older Health Connect uses the SHOW_PERMISSIONS_RATIONALE -->
+            <!-- action. Declaring both keeps rationale reachable across -->
+            <!-- versions.                                              -->
+            <!-- ===================================================== -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+
+            <!-- Automation configuration deep link (Req 14.6):        -->
+            <!-- healthautoexport://automation?name=...&exportFormat=... -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="healthautoexport"
+                    android:host="automation" />
+            </intent-filter>
         </activity>
+
+        <!-- ========================================================= -->
+        <!-- API 34+ permissions-usage rationale target for Health      -->
+        <!-- Connect (Req 1.x). Points at MainActivity so the rationale -->
+        <!-- screen is reachable on Android 14+.                        -->
+        <!-- ========================================================= -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".MainActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- ========================================================= -->
+        <!-- On-demand WorkManager init (Req 15.1): remove the default  -->
+        <!-- androidx.startup initializer so HealthExportApp's          -->
+        <!-- Configuration.Provider (with HiltWorkerFactory) is used.   -->
+        <!-- ========================================================= -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
     </application>
 

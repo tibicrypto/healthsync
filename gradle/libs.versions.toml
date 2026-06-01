@@ -58,6 +58,7 @@ androidxTestCore = "1.6.1"
 # --- AndroidX core / lifecycle / Compose ---------------------------------
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -144,6 +145,7 @@ compose-navigation = [
     "androidx-activity-compose",
     "androidx-navigation-compose",
     "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-runtime-compose",
     "androidx-hilt-navigation-compose",
 ]
 # Room runtime artifacts (compiler is added separately via ksp).
