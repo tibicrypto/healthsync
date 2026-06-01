@@ -43,7 +43,7 @@ import kotlin.reflect.KClass
  */
 class HealthConnectDataSource(
     private val context: Context,
-    private val providerPackageName: String = HealthConnectClient.DEFAULT_PROVIDER_PACKAGE_NAME,
+    private val providerPackageName: String = HEALTH_CONNECT_PROVIDER_PACKAGE,
     private val sdkStatusProvider: (Context, String) -> Int = { ctx, pkg ->
         HealthConnectClient.getSdkStatus(ctx, pkg)
     },
@@ -272,4 +272,13 @@ class HealthConnectDataSource(
     /** Liên kết Play Store cài/cập nhật gói cung cấp Health_Connect (Requirement 1.8). */
     private fun playStoreInstallLink(): String =
         "market://details?id=$providerPackageName&url=healthconnect%3A%2F%2Fonboarding"
+
+    companion object {
+        /**
+         * Tên gói chính thức của ứng dụng cung cấp Health Connect của Google. Dùng hằng số tường
+         * minh thay cho `HealthConnectClient.DEFAULT_PROVIDER_PACKAGE_NAME` vì hằng đó là
+         * `internal` trong SDK 1.1.0-alpha07 (không truy cập được từ module này).
+         */
+        const val HEALTH_CONNECT_PROVIDER_PACKAGE: String = "com.google.android.apps.healthdata"
+    }
 }

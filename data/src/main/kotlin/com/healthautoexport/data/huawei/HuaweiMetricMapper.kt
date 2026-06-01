@@ -94,8 +94,8 @@ internal class HuaweiMetricMapper {
     }
 
     /** Chuyển giá trị thô (vô hướng hoặc có cấu trúc) sang [MetricValue] theo [spec]. */
-    private fun mapValue(raw: HuaweiRawSample, spec: MetricCatalog.Spec): MetricValue? =
-        when (spec.schema) {
+    private fun mapValue(raw: HuaweiRawSample, spec: MetricCatalog.Spec): MetricValue? {
+        return when (spec.schema) {
             MetricSchema.BLOOD_PRESSURE -> {
                 val bp = raw.structured as? HuaweiStructuredValue.BloodPressure ?: return null
                 MetricValue.BloodPressure(
@@ -119,6 +119,7 @@ internal class HuaweiMetricMapper {
                 MetricValue.Scalar(canonical)
             }
         }
+    }
 
     /** Ánh xạ một phiên tập thô → [MapOutcome] của [Workout] (Requirements 5.1–5.5). */
     private fun mapWorkout(raw: HuaweiRawWorkout): MapOutcome<Workout> {

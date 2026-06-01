@@ -48,7 +48,7 @@ import kotlinx.coroutines.withTimeout
 class HealthConnectPermissionManager(
     private val context: Context,
     private val store: GrantedPermissionStore,
-    private val providerPackageName: String = HealthConnectClient.DEFAULT_PROVIDER_PACKAGE_NAME,
+    private val providerPackageName: String = HealthConnectDataSource.HEALTH_CONNECT_PROVIDER_PACKAGE,
     private val requester: HealthConnectPermissionRequester? = null,
     private val requestTimeoutMillis: Long = DEFAULT_REQUEST_TIMEOUT_MILLIS,
     private val grantedPermissionsReader: suspend () -> Set<String> = {
